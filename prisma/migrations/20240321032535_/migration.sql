@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Usuario" ALTER COLUMN "departamento" SET DATA TYPE VARCHAR(2),
+ALTER COLUMN "ciudad" SET DATA TYPE VARCHAR(2);

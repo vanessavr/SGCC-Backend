@@ -1,0 +1,163 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [pgcrypto]
+}
+
+model Usuario {
+  id                   String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombres              String                 @db.VarChar(60)
+  apellidos            String                 @db.VarChar(60)
+  tipoDocumento        String                 @db.VarChar(1)
+  numeroIdentificacion String                 @db.VarChar(10)
+  fechaNacimiento      DateTime               @db.Date
+  genero               String                 @db.VarChar(1)
+  correoElectronico    String                 @unique @db.VarChar(60)
+  celular              String                 @db.VarChar(10)
+  departamento         String                 @db.VarChar(2)
+  ciudad               String                 @db.VarChar(2)
+  foto                 String?                @db.VarChar(50)
+  password             String                 @db.VarChar(50)
+  poblacionEspecial    String                 @db.VarChar(2)
+  cursoComplementario  CursoComplementario[]
+  solicitud            Solicitud[]
+  horario              Horario[]
+  usuarioRol           UsuarioRol[]
+  responsableSolicitud ResponsableSolicitud[]
+  createdAt            DateTime?              @default(now())
+  updatedAt            DateTime?              @updatedAt
+}
+
+model Empresa {
+  id                 String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nit                String             @db.VarChar(11)
+  representanteLegal String             @db.VarChar(60)
+  razonSocial        String             @db.VarChar(60)
+  correoElectronico  String             @unique @db.VarChar(60)
+  celular            String             @db.VarChar(10)
+  direccion          String             @db.VarChar(50)
+  actividadEconomica String             @db.VarChar(2)
+  departamento       String             @db.VarChar(2)
+  ciudad             String             @db.VarChar(2)
+  password           String             @db.VarChar(50)
+  SolicitudEmpresa   SolicitudEmpresa[]
+  createdAt          DateTime?          @default(now())
+  updatedAt          DateTime?          @updatedAt
+}
+
+model Ambiente {
+  id                  String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombre              String                @db.VarChar(60)
+  capacidad           Int
+  centroFormacion     String                @db.VarChar(1)
+  horario             Horario[]
+  cursoComplementario CursoComplementario[]
+  createdAt           DateTime?             @default(now())
+  updatedAt           DateTime?             @updatedAt
+}
+
+model CursoComplementario {
+  id               String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombre           String      @db.VarChar(60)
+  areaFormacion    String      @db.VarChar(60)
+  fichaFormacion   String      @unique @db.VarChar(7)
+  centroFormacion  String      @db.VarChar(1)
+  jornada          String      @db.VarChar(1)
+  instructorId     String      @db.Uuid
+  instructor       Usuario?    @relation(fields: [instructorId], references: [id])
+  ambienteId       String      @db.Uuid
+  ambiente         Ambiente?   @relation(fields: [ambienteId], references: [id])
+  ciudad           String      @db.VarChar(2)
+  departamento     String      @db.VarChar(2)
+  duracion         Int
+  fechaInicio      DateTime    @db.Date
+  fechaFin         DateTime    @db.Date
+  cuposDisponibles Int
+  imagen           String?
+  descripcion      String?
+  solicitud        Solicitud[]
+  horario          Horario[]
+  createdAt        DateTime?   @default(now())
+  updatedAt        DateTime?   @updatedAt
+}
+
+model Solicitud {
+  id                    String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  fechaSolicitud        DateTime
+  origenSolicitud       String                @db.VarChar(1)
+  radicadoSolicitud     String                @unique @db.VarChar(20)
+  segmento              String                @db.VarChar(2)
+  cuposSolicitados      Int
+  usuarioId             String                @db.Uuid
+  usuario               Usuario?              @relation(fields: [usuarioId], references: [id])
+  tipoSolicitud         String                @db.VarChar(2)
+  cursoComplementarioId String                @db.Uuid
+  cursoComplementario   CursoComplementario?  @relation(fields: [cursoComplementarioId], references: [id])
+  estadoSolicitud       String                @db.VarChar(2)
+  motivoSolicitud       String                @db.VarChar(2)
+  responsableSolicitud  ResponsableSolicitud?
+  SolicitudEmpresa      SolicitudEmpresa?
+  createdAt             DateTime?             @default(now())
+  updatedAt             DateTime?             @updatedAt
+}
+
+model SolicitudEmpresa {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  empresaId   String    @db.Uuid
+  empresa     Empresa   @relation(fields: [empresaId], references: [id])
+  solicitudId String    @unique @db.Uuid
+  solicitud   Solicitud @relation(fields: [solicitudId], references: [id])
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+}
+
+model ResponsableSolicitud {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  usuarioId   String    @db.Uuid
+  usuario     Usuario   @relation(fields: [usuarioId], references: [id])
+  solicitudId String    @unique @db.Uuid
+  solicitud   Solicitud @relation(fields: [solicitudId], references: [id])
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+}
+
+model Horario {
+  id                    String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  cursoComplementarioId String               @db.Uuid
+  cursoComplementario   CursoComplementario? @relation(fields: [cursoComplementarioId], references: [id])
+  ambienteId            String               @db.Uuid
+  ambiente              Ambiente?            @relation(fields: [ambienteId], references: [id])
+  fechaHoraInicio       DateTime
+  fechaHoraFin          DateTime
+  instructorId          String               @db.Uuid
+  instructor            Usuario?             @relation(fields: [instructorId], references: [id])
+  createdAt             DateTime?            @default(now())
+  updatedAt             DateTime?            @updatedAt
+}
+
+model Rol {
+  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombre      String       @db.VarChar(60)
+  descripcion String
+  usuarioRol  UsuarioRol[]
+  createdAt   DateTime?    @default(now())
+  updatedAt   DateTime?    @updatedAt
+}
+
+model UsuarioRol {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  rolId     String    @db.Uuid
+  rol       Rol?      @relation(fields: [rolId], references: [id])
+  usuarioId String    @db.Uuid
+  usuario   Usuario?  @relation(fields: [usuarioId], references: [id])
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+}

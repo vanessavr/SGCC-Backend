@@ -1,0 +1,82 @@
+{
+"nombres":"Maria",
+"apellidos":"Salazar Osorio",
+"tipoDocumento":"2",
+"numeroIdentificacion":"100072820",
+"fechaNacimiento":"2012-04-23T18:25:43.511Z",
+"genero":"1",
+"correoElectronico":"maria@gmail.com",
+"celular":"33",
+"departamento":"3",
+"ciudad":"3",
+"foto":"",
+"password":"12324",
+"poblacionEspecial":"5"
+}
+
+//ambiente
+{
+ "nombre": "Motos",            
+ "capacidad": 30 ,      
+ "centroFormacion": "2"
+}
+
+//solicitud
+{
+  "fechaSolicitud": "2023-04-23T18:25:43.511Z",       
+  "origenSolicitud": "3",               
+  "radicadoSolicitud": "30307",                 
+  "segmento": "2",                         
+  "usuarioId": "4998296d-2bff-4672-b809-bc2c13067c17",          
+  "tipoSolicitud":  "1",                       
+  "cursoComplementarioId": "9582cc49-b150-40d4-86f1-72556a17f4ed",    
+  "estadoSolicitud": "2",                     
+  "motivoSolicitud":  "1",
+    "ResponsableSolicitud": {
+        "usuarioId": "e0fa421a-1ef7-43e1-8c2a-3f7443fb7b5f"
+    },
+    "solicitudEmpresa": {
+        "empresaId": "e0fa421a-1ef7-43e1-8c2a-3f7443fb7b5f"
+    }
+}
+
+//horario
+{
+  "cursoComplementarioId": "9582cc49-b150-40d4-86f1-72556a17f4ed", 
+  "ambienteId": "b6312483-dd31-4e88-b748-76b55a46b328",         
+  "fechaHoraInicio": "2023-04-23T18:25:43.511Z",       
+  "fechaHoraFin":  "2023-06-23T18:25:43.511Z",        
+  "instructorId": "4998296d-2bff-4672-b809-bc2c13067c17"       
+}
+
+//empresa
+{
+  "nit": "3459303",               
+  "representanteLegal": "Andres Perez",     
+  "razonSocial": "vitalplates",           
+  "correoElectronico": "rh@vitalplates.com",           
+  "celular":  "3228679567",              
+  "direccion": "calle 45 # 11-30" ,            
+  "actividadEconomica": "3",            
+  "departamento":  "3",                
+  "ciudad": "2",                     
+  "password": "12345"
+}
+
+//curso complementario
+{
+  "nombre": "electricidad basica",
+  "areaFormacion": "4",           
+  "fichaFormacion": "284950",   
+  "centroFormacion": "1",             
+  "instructorId":  "4998296d-2bff-4672-b809-bc2c13067c17",        
+  "ambienteId":  "b6312483-dd31-4e88-b748-76b55a46b328",                   
+  "departamento": "5",                
+  "duracion":  40,            
+  "fechaInicio": "2023-04-23T18:25:43.511Z",           
+  "fechaFin": "2023-04-25T18:25:43.511Z",              
+  "fechaCierreInscripcion": "2023-04-10T18:25:43.511Z" 
+}
+
+
+ 
