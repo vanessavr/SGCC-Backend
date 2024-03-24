@@ -1,9 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { UpdatePerfilDto } from './dto/update-perfil.dto'
 import { UsuarioService } from 'src/usuario/usuario.service'
+import { AuthGuard } from 'src/auth/jwt-auth.guard'
 
 @ApiTags('Perfil')
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('perfil')
 export class PerfilController {
     constructor(private readonly usuarioService: UsuarioService) {}
@@ -15,6 +18,7 @@ export class PerfilController {
 
     @Patch(':id')
     update(@Param('id') id: string, @Body() updatePerfilDto: UpdatePerfilDto) {
+        updatePerfilDto.fechaNacimiento = new Date(updatePerfilDto.fechaNacimiento)
         return this.usuarioService.update(id, updatePerfilDto)
     }
 

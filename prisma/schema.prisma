@@ -17,7 +17,7 @@ model Usuario {
   nombres              String                 @db.VarChar(60)
   apellidos            String                 @db.VarChar(60)
   tipoDocumento        String                 @db.VarChar(1)
-  numeroIdentificacion String                 @db.VarChar(10)
+  numeroIdentificacion String                 @unique @db.VarChar(10)
   fechaNacimiento      DateTime               @db.Date
   genero               String                 @db.VarChar(1)
   correoElectronico    String                 @unique @db.VarChar(60)
@@ -25,7 +25,7 @@ model Usuario {
   departamento         String                 @db.VarChar(2)
   ciudad               String                 @db.VarChar(2)
   foto                 String?                @db.VarChar(50)
-  password             String                 @db.VarChar(50)
+  password             String                 @db.VarChar(65)
   poblacionEspecial    String                 @db.VarChar(2)
   cursoComplementario  CursoComplementario[]
   solicitud            Solicitud[]
@@ -47,7 +47,7 @@ model Empresa {
   actividadEconomica String             @db.VarChar(2)
   departamento       String             @db.VarChar(2)
   ciudad             String             @db.VarChar(2)
-  password           String             @db.VarChar(50)
+  password           String             @db.VarChar(65)
   SolicitudEmpresa   SolicitudEmpresa[]
   createdAt          DateTime?          @default(now())
   updatedAt          DateTime?          @updatedAt
@@ -78,9 +78,9 @@ model CursoComplementario {
   ciudad           String      @db.VarChar(2)
   departamento     String      @db.VarChar(2)
   duracion         Int
-  fechaInicio      DateTime    @db.Date
-  fechaFin         DateTime    @db.Date
-  cuposDisponibles Int
+  fechaInicio      DateTime?   @db.Date
+  fechaFin         DateTime?   @db.Date
+  cuposDisponibles Int?
   imagen           String?
   descripcion      String?
   solicitud        Solicitud[]

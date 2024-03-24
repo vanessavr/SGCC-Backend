@@ -1,11 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common'
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common'
 import { UsuarioService } from './usuario.service'
 import { CreateUsuarioDto } from './dto/create-usuario.dto'
 import { UpdateUsuarioDto } from './dto/update-usuario.dto'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { CursoComplementarioService } from 'src/curso-complementario/curso-complementario.service'
+import { AuthGuard } from 'src/auth/jwt-auth.guard'
 
 @ApiTags('Usuario')
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('usuario')
 export class UsuarioController {
     constructor(
@@ -15,6 +18,8 @@ export class UsuarioController {
 
     @Post()
     create(@Body() createUsuarioDto: CreateUsuarioDto) {
+        createUsuarioDto.fechaNacimiento = new Date(createUsuarioDto.fechaNacimiento)
+
         return this.usuarioService.create(createUsuarioDto)
     }
 
@@ -30,6 +35,8 @@ export class UsuarioController {
 
     @Patch(':id')
     update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
+        updateUsuarioDto.fechaNacimiento = new Date(updateUsuarioDto.fechaNacimiento)
+
         return this.usuarioService.update(id, updateUsuarioDto)
     }
 
