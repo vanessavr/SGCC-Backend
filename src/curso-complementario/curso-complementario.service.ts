@@ -37,7 +37,7 @@ export class CursoComplementarioService {
         })
     }
 
-    // trae un registro por el camppo id de la tabla cursos complementarios Get /cursos-complementarios/{id}
+    // trae un registro por el campo id de la tabla cursos complementarios Get /cursos-complementarios/{id}
     findOne(id: string) {
         return this.prisma.cursoComplementario.findUnique({
             where: {
