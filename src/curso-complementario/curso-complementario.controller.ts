@@ -6,12 +6,12 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { AuthGuard } from 'src/auth/jwt-auth.guard'
 
 @ApiTags('Curso Complementario')
-@ApiBearerAuth()
-@UseGuards(AuthGuard)
 @Controller('curso-complementario')
 export class CursoComplementarioController {
     constructor(private readonly cursoComplementarioService: CursoComplementarioService) {}
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Post()
     create(@Body() createCursoComplementarioDto: CreateCursoComplementarioDto) {
         return this.cursoComplementarioService.create(createCursoComplementarioDto)
@@ -27,11 +27,15 @@ export class CursoComplementarioController {
         return this.cursoComplementarioService.findOne(id)
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Patch(':id')
     update(@Param('id') id: string, @Body() updateCursoComplementarioDto: UpdateCursoComplementarioDto) {
         return this.cursoComplementarioService.update(id, updateCursoComplementarioDto)
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Delete(':id')
     remove(@Param('id') id: string) {
         return this.cursoComplementarioService.remove(id)

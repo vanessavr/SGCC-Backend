@@ -14,8 +14,15 @@ export class EmpresaService {
         const plainToHash = await hash(password, 10)
         createEmpresaDto = { ...createEmpresaDto, password: plainToHash }
 
-        return this.prisma.empresa.create({
+        const createdEmpresa = await this.prisma.empresa.create({
             data: createEmpresaDto,
+        })
+
+        return this.prisma.modeloRol.create({
+            data: {
+                rolId: 'd7f72697-7937-490a-953d-26bd122d6c3e',
+                modeloId: createdEmpresa.id,
+            },
         })
     }
 
@@ -45,6 +52,13 @@ export class EmpresaService {
 
     //eliminar
     remove(id: string) {
+        // Eliminar las entradas correspondientes en la tabla ModeloRol usando modeloId como identificador
+        this.prisma.modeloRol.deleteMany({
+            where: {
+                modeloId: id,
+            },
+        })
+
         return this.prisma.empresa.delete({
             where: {
                 id,

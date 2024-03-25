@@ -7,8 +7,6 @@ import { CursoComplementarioService } from 'src/curso-complementario/curso-compl
 import { AuthGuard } from 'src/auth/jwt-auth.guard'
 
 @ApiTags('Usuario')
-@ApiBearerAuth()
-@UseGuards(AuthGuard)
 @Controller('usuario')
 export class UsuarioController {
     constructor(
@@ -21,26 +19,36 @@ export class UsuarioController {
         return this.usuarioService.create(createUsuarioDto)
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Get()
     findAll() {
         return this.usuarioService.findAll()
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.usuarioService.findOne(id)
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Patch(':id')
     update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
         return this.usuarioService.update(id, updateUsuarioDto)
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Delete(':id')
     remove(@Param('id') id: string) {
         return this.usuarioService.remove(id)
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Get(':id/curso-complementario')
     findCursosComplementariosByInstructor(@Param('id') id: string) {
         return this.cursoComplementarioService.findCursosComplementariosByInstructor(id)

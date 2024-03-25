@@ -12,11 +12,18 @@ export class UsuarioService {
     async create(createUsuarioDto: CreateUsuarioDto) {
         const { password, fechaNacimiento } = createUsuarioDto
         const plainToHash = await hash(password, 10)
-        const newFechaNacimiento = new Date(fechaNacimiento)
-        createUsuarioDto = { ...createUsuarioDto, password: plainToHash, fechaNacimiento: newFechaNacimiento }
 
-        return this.prisma.usuario.create({
+        createUsuarioDto = { ...createUsuarioDto, password: plainToHash, fechaNacimiento: new Date(fechaNacimiento) }
+
+        const createdUser = await this.prisma.usuario.create({
             data: createUsuarioDto,
+        })
+
+        return this.prisma.modeloRol.create({
+            data: {
+                rolId: 'b202d04e-eb12-4cf5-9c2d-d382536e7ff4',
+                modeloId: createdUser.id,
+            },
         })
     }
 
@@ -50,6 +57,14 @@ export class UsuarioService {
 
     //Eliminar DELETE
     remove(id: string) {
+        // Eliminar las entradas correspondientes en la tabla ModeloRol usando modeloId como identificador
+        this.prisma.modeloRol.deleteMany({
+            where: {
+                modeloId: id,
+            },
+        })
+
+        // Eliminar el usuario usando el id proporcionado
         return this.prisma.usuario.delete({
             where: {
                 id,

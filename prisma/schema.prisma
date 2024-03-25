@@ -30,7 +30,6 @@ model Usuario {
   cursoComplementario  CursoComplementario[]
   solicitud            Solicitud[]
   horario              Horario[]
-  usuarioRol           UsuarioRol[]
   responsableSolicitud ResponsableSolicitud[]
   createdAt            DateTime?              @default(now())
   updatedAt            DateTime?              @updatedAt
@@ -144,20 +143,19 @@ model Horario {
 }
 
 model Rol {
-  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  nombre      String       @db.VarChar(60)
+  id          String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombre      String      @db.VarChar(60)
   descripcion String
-  usuarioRol  UsuarioRol[]
-  createdAt   DateTime?    @default(now())
-  updatedAt   DateTime?    @updatedAt
+  usuarioRol  ModeloRol[]
+  createdAt   DateTime?   @default(now())
+  updatedAt   DateTime?   @updatedAt
 }
 
-model UsuarioRol {
+model ModeloRol {
   id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   rolId     String    @db.Uuid
   rol       Rol?      @relation(fields: [rolId], references: [id])
-  usuarioId String    @db.Uuid
-  usuario   Usuario?  @relation(fields: [usuarioId], references: [id])
+  modeloId  String    @db.Uuid
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 }
