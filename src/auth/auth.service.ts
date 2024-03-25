@@ -6,7 +6,7 @@ import { Usuario } from '@prisma/client'
 export class AuthService {
     constructor(private jwtService: JwtService) {}
 
-    async getUserFromToken(token: string): Promise<Usuario> {
+    async getUserFromToken(token: string): Promise<any> {
         try {
             const payload = this.jwtService.verify(token)
 

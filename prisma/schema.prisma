@@ -38,7 +38,7 @@ model Usuario {
 
 model Empresa {
   id                 String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  nit                String             @db.VarChar(11)
+  nit                String             @unique @db.VarChar(11)
   representanteLegal String             @db.VarChar(60)
   razonSocial        String             @db.VarChar(60)
   correoElectronico  String             @unique @db.VarChar(60)

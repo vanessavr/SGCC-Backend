@@ -1,16 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty } from 'class-validator'
 
-export class UpdatePerfilDto {
+export class UpdatePerfilPersonaDto {
     id: string
-
-    @ApiProperty()
-    @IsNotEmpty()
-    nombres: string
-
-    @ApiProperty()
-    @IsNotEmpty()
-    apellidos: string
 
     @ApiProperty()
     @IsNotEmpty()
@@ -31,7 +23,4 @@ export class UpdatePerfilDto {
     @ApiProperty()
     @IsNotEmpty()
     ciudad: string
-
-    @ApiProperty()
-    foto: string
 }
