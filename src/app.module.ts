@@ -8,12 +8,11 @@ import { HorarioModule } from './horario/horario.module'
 import { SolicitudModule } from './solicitud/solicitud.module'
 import { AmbienteModule } from './ambiente/ambiente.module'
 import { AreaFormacionModule } from './area-formacion/area-formacion.module'
-import { PerfilModule } from './perfil/perfil.module'
 import { ListasModule } from './listas/listas.module'
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './auth/auth.module'
 
 @Module({
-    imports: [UsuarioModule, EmpresaModule, CursoComplementarioModule, HorarioModule, SolicitudModule, AmbienteModule, AreaFormacionModule, PerfilModule, ListasModule, AuthModule],
+    imports: [UsuarioModule, EmpresaModule, CursoComplementarioModule, HorarioModule, SolicitudModule, AmbienteModule, AreaFormacionModule, ListasModule, AuthModule],
     controllers: [AppController],
     providers: [AppService],
 })

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsEmpty, IsNotEmpty } from 'class-validator'
+import { IsNotEmpty } from 'class-validator'
 
-export class CreatePerfilDto {
+export class UpdatePerfilDto {
     id: string
 
     @ApiProperty()
@@ -14,19 +14,7 @@ export class CreatePerfilDto {
 
     @ApiProperty()
     @IsNotEmpty()
-    tipoDocumento: string
-
-    @ApiProperty()
-    @IsNotEmpty()
-    numeroIdentificacion: string
-
-    @ApiProperty()
-    @IsNotEmpty()
     fechaNacimiento: Date
-
-    @ApiProperty()
-    @IsNotEmpty()
-    genero: string
 
     @ApiProperty()
     @IsNotEmpty()
@@ -46,12 +34,4 @@ export class CreatePerfilDto {
 
     @ApiProperty()
     foto: string
-
-    @ApiProperty()
-    @IsNotEmpty()
-    password: string
-
-    @ApiProperty()
-    @IsNotEmpty()
-    poblacionEspecial: string
 }
