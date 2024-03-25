@@ -41,7 +41,6 @@ export class CreateCursoComplementarioDto {
     ciudad: string
 
     @ApiProperty()
-    @IsEmpty()
     cuposDisponibles: number
 
     @ApiProperty()
@@ -49,18 +48,14 @@ export class CreateCursoComplementarioDto {
     duracion: number
 
     @ApiProperty()
-    @IsEmpty()
     fechaInicio: Date
 
     @ApiProperty()
-    @IsEmpty()
     fechaFin: Date
 
     @ApiProperty()
-    @IsEmpty()
     imagen: string
 
     @ApiProperty()
-    @IsEmpty()
     descripcion: string
 }

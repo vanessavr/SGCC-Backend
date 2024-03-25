@@ -14,10 +14,6 @@ export class SolicitudController {
 
     @Post()
     create(@Body() createSolicitudDto: CreateSolicitudDto) {
-        const currentDate = new Date()
-        createSolicitudDto.fechaSolicitud = currentDate
-        createSolicitudDto.cuposSolicitados = +createSolicitudDto.cuposSolicitados
-
         return this.solicitudService.create(createSolicitudDto)
     }
 
@@ -33,8 +29,6 @@ export class SolicitudController {
 
     @Patch(':id')
     update(@Param('id') id: string, @Body() updateSolicitudDto: UpdateSolicitudDto) {
-        updateSolicitudDto.cuposSolicitados = +updateSolicitudDto.cuposSolicitados
-
         return this.solicitudService.update(id, updateSolicitudDto)
     }
 

@@ -11,6 +11,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
             secretOrKey: process.env.NEXTJS_PUBLIC_JWT_SECRET,
         })
     }
+
     async validate(payLoad: any) {
         return { sub: payLoad.id, username: payLoad.nombres }
     }

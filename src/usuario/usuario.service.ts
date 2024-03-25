@@ -10,10 +10,11 @@ export class UsuarioService {
 
     //Crear usuario POST
     async create(createUsuarioDto: CreateUsuarioDto) {
-        const { password } = createUsuarioDto
+        const { password, fechaNacimiento } = createUsuarioDto
         const plainToHash = await hash(password, 10)
-        createUsuarioDto = { ...createUsuarioDto, password: plainToHash }
-        
+        const newFechaNacimiento = new Date(fechaNacimiento)
+        createUsuarioDto = { ...createUsuarioDto, password: plainToHash, fechaNacimiento: newFechaNacimiento }
+
         return this.prisma.usuario.create({
             data: createUsuarioDto,
         })
@@ -35,6 +36,10 @@ export class UsuarioService {
 
     // actualizar PATCH
     update(id: string, updateUsuarioDto: UpdateUsuarioDto) {
+        const { fechaNacimiento } = updateUsuarioDto
+        const newFechaNacimiento = new Date(fechaNacimiento)
+        updateUsuarioDto = { ...updateUsuarioDto, fechaNacimiento: newFechaNacimiento }
+
         return this.prisma.usuario.update({
             where: {
                 id,

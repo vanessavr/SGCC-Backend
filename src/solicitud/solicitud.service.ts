@@ -9,6 +9,11 @@ export class SolicitudService {
 
     //Crear solicitud POST
     async create(createSolicitudDto: CreateSolicitudDto) {
+        const { cuposSolicitados } = createSolicitudDto
+        const currentDate = new Date()
+
+        createSolicitudDto = { ...createSolicitudDto, fechaSolicitud: currentDate, cuposSolicitados: +cuposSolicitados }
+
         const createdSolicitud = await this.prisma.solicitud.create({
             data: createSolicitudDto,
             select: {
@@ -64,6 +69,10 @@ export class SolicitudService {
 
     //actualizar
     update(id: string, updateSolicitudDto: UpdateSolicitudDto) {
+        const { cuposSolicitados } = updateSolicitudDto
+
+        updateSolicitudDto = { ...updateSolicitudDto, cuposSolicitados: +cuposSolicitados }
+
         return this.prisma.solicitud.update({
             where: {
                 id,

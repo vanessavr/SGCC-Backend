@@ -2,13 +2,18 @@ import { Injectable } from '@nestjs/common'
 import { CreateEmpresaDto } from './dto/create-empresa.dto'
 import { UpdateEmpresaDto } from './dto/update-empresa.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
+import { hash } from 'bcrypt'
 
 @Injectable()
 export class EmpresaService {
     constructor(private prisma: PrismaService) {}
 
     //Crear empresa POST
-    create(createEmpresaDto: CreateEmpresaDto) {
+    async create(createEmpresaDto: CreateEmpresaDto) {
+        const { password } = createEmpresaDto
+        const plainToHash = await hash(password, 10)
+        createEmpresaDto = { ...createEmpresaDto, password: plainToHash }
+
         return this.prisma.empresa.create({
             data: createEmpresaDto,
         })

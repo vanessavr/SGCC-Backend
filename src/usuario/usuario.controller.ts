@@ -18,8 +18,6 @@ export class UsuarioController {
 
     @Post()
     create(@Body() createUsuarioDto: CreateUsuarioDto) {
-        createUsuarioDto.fechaNacimiento = new Date(createUsuarioDto.fechaNacimiento)
-
         return this.usuarioService.create(createUsuarioDto)
     }
 
@@ -35,8 +33,6 @@ export class UsuarioController {
 
     @Patch(':id')
     update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
-        updateUsuarioDto.fechaNacimiento = new Date(updateUsuarioDto.fechaNacimiento)
-
         return this.usuarioService.update(id, updateUsuarioDto)
     }
 

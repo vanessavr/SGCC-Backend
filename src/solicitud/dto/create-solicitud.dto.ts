@@ -5,7 +5,6 @@ import { CreateResponsableSolicitudDto } from './create-responsable-solicitud.dt
 
 export class CreateSolicitudDto {
     @ApiProperty()
-    @IsEmpty()
     fechaSolicitud: Date
 
     @ApiProperty()
@@ -48,6 +47,5 @@ export class CreateSolicitudDto {
     // solicitudEmpresa: CreateSolicitudEmpresaDto
 
     // @ApiProperty({ type: CreateResponsableSolicitudDto })
-    // // @isEmpty()
     // responsableSolicitud: CreateResponsableSolicitudDto
 }

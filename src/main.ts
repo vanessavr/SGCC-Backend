@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { ValidationPipe } from '@nestjs/common'
+import * as cookieParser from 'cookie-parser'
 
 async function bootstrap() {
     // Create a NestJS application instance by passing the AppModule to the NestFactory
@@ -29,6 +30,8 @@ async function bootstrap() {
         origin: process.env.NEXTJS_PUBlIC_URL,
         credentials: true,
     })
+
+    app.use(cookieParser())
 
     await app.listen(3000)
 }

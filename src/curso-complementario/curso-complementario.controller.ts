@@ -14,11 +14,6 @@ export class CursoComplementarioController {
 
     @Post()
     create(@Body() createCursoComplementarioDto: CreateCursoComplementarioDto) {
-        createCursoComplementarioDto.duracion = +createCursoComplementarioDto.duracion
-        createCursoComplementarioDto.cuposDisponibles = +createCursoComplementarioDto.cuposDisponibles
-        createCursoComplementarioDto.fechaInicio = new Date(createCursoComplementarioDto.fechaInicio)
-        createCursoComplementarioDto.fechaFin = new Date(createCursoComplementarioDto.fechaFin)
-
         return this.cursoComplementarioService.create(createCursoComplementarioDto)
     }
 
@@ -34,11 +29,6 @@ export class CursoComplementarioController {
 
     @Patch(':id')
     update(@Param('id') id: string, @Body() updateCursoComplementarioDto: UpdateCursoComplementarioDto) {
-        updateCursoComplementarioDto.duracion = +updateCursoComplementarioDto.duracion
-        updateCursoComplementarioDto.cuposDisponibles = +updateCursoComplementarioDto.cuposDisponibles
-        updateCursoComplementarioDto.fechaInicio = new Date(updateCursoComplementarioDto.fechaInicio)
-        updateCursoComplementarioDto.fechaFin = new Date(updateCursoComplementarioDto.fechaFin)
-
         return this.cursoComplementarioService.update(id, updateCursoComplementarioDto)
     }
 

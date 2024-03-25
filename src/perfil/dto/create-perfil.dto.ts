@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger"
-import { IsEmpty, IsNotEmpty } from "class-validator"
+import { ApiProperty } from '@nestjs/swagger'
+import { IsEmpty, IsNotEmpty } from 'class-validator'
 
 export class CreatePerfilDto {
     id: string
@@ -45,7 +45,6 @@ export class CreatePerfilDto {
     ciudad: string
 
     @ApiProperty()
-    @IsEmpty()
     foto: string
 
     @ApiProperty()
