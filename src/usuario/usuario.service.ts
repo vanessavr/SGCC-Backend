@@ -22,14 +22,24 @@ export class UsuarioService {
         return this.prisma.modeloRol.create({
             data: {
                 rolId: 'b202d04e-eb12-4cf5-9c2d-d382536e7ff4',
-                modeloId: createdUser.id,
+                usuarioId: createdUser.id,
             },
         })
     }
 
     // es para traer rodo de la base de datos de la tabla usuarios  Get /usuario
-    findAll() {
-        return this.prisma.usuario.findMany()
+    findAll(rolId: string) {
+        return this.prisma.usuario.findMany({
+            where: {
+                modeloRoles: {
+                    some: {
+                        rolId: {
+                            equals: rolId,
+                        },
+                    },
+                },
+            },
+        })
     }
 
     // trae un registro por el campo id de la tabla usuario Get /usuario/{id}
@@ -61,7 +71,7 @@ export class UsuarioService {
             // Eliminar el responsable de la solicitud
             this.prisma.modeloRol.deleteMany({
                 where: {
-                    modeloId: id,
+                    usuarioId: id,
                 },
             }),
             // Eliminar la solicitud

@@ -21,7 +21,7 @@ export class EmpresaService {
         return this.prisma.modeloRol.create({
             data: {
                 rolId: 'd7f72697-7937-490a-953d-26bd122d6c3e',
-                modeloId: createdEmpresa.id,
+                empresaId: createdEmpresa.id,
             },
         })
     }
@@ -56,7 +56,7 @@ export class EmpresaService {
             // Eliminar el responsable de la solicitud
             this.prisma.modeloRol.deleteMany({
                 where: {
-                    modeloId: id,
+                    empresaId: id,
                 },
             }),
             // Eliminar la solicitud

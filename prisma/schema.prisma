@@ -31,6 +31,7 @@ model Usuario {
   solicitud            Solicitud[]
   horario              Horario[]
   responsableSolicitud ResponsableSolicitud[]
+  modeloRoles          ModeloRol[]
   createdAt            DateTime?              @default(now())
   updatedAt            DateTime?              @updatedAt
 }
@@ -48,6 +49,7 @@ model Empresa {
   ciudad             String             @db.VarChar(2)
   password           String             @db.VarChar(65)
   SolicitudEmpresa   SolicitudEmpresa[]
+  modeloRoles        ModeloRol[]
   createdAt          DateTime?          @default(now())
   updatedAt          DateTime?          @updatedAt
 }
@@ -155,7 +157,10 @@ model ModeloRol {
   id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   rolId     String    @db.Uuid
   rol       Rol?      @relation(fields: [rolId], references: [id])
-  modeloId  String    @db.Uuid
+  usuarioId String?   @db.Uuid
+  usuario   Usuario?  @relation(fields: [usuarioId], references: [id])
+  empresaId String?   @db.Uuid
+  empresa   Empresa?  @relation(fields: [empresaId], references: [id])
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 }

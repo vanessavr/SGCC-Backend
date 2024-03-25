@@ -21,9 +21,9 @@ export class UsuarioController {
 
     @ApiBearerAuth()
     @UseGuards(AuthGuard)
-    @Get()
-    findAll() {
-        return this.usuarioService.findAll()
+    @Get('/rol/:rolId')
+    findAll(@Param('rolId') rolId: string) {
+        return this.usuarioService.findAll(rolId)
     }
 
     @ApiBearerAuth()
