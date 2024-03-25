@@ -34,4 +34,13 @@ export class AuthController {
 
         return { user: findUser, token }
     }
+
+    @Post('logout')
+    async logout(@Res({ passthrough: true }) res: Response) {
+        // Eliminar la cookie que contiene el token de acceso
+        res.clearCookie('accessToken')
+
+        // Devolver una respuesta indicando que el logout fue exitoso
+        return { message: 'Logout exitoso' }
+    }
 }
