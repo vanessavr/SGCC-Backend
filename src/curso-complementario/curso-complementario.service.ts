@@ -11,7 +11,13 @@ export class CursoComplementarioService {
     create(createCursoComplementarioDto: CreateCursoComplementarioDto) {
         const { duracion, cuposDisponibles, fechaInicio, fechaFin } = createCursoComplementarioDto
 
-        createCursoComplementarioDto = { ...createCursoComplementarioDto, duracion: +duracion, cuposDisponibles: +cuposDisponibles, fechaInicio: new Date(fechaInicio), fechaFin: new Date(fechaFin) }
+        createCursoComplementarioDto = {
+            ...createCursoComplementarioDto,
+            duracion: +duracion,
+            cuposDisponibles: +cuposDisponibles,
+            fechaInicio: fechaInicio ? new Date(fechaInicio) : null,
+            fechaFin: fechaFin ? new Date(fechaFin) : null,
+        }
 
         return this.prisma.cursoComplementario.create({
             data: createCursoComplementarioDto,
@@ -51,7 +57,13 @@ export class CursoComplementarioService {
     update(id: string, updateCursoComplementarioDto: UpdateCursoComplementarioDto) {
         const { duracion, cuposDisponibles, fechaInicio, fechaFin } = updateCursoComplementarioDto
 
-        updateCursoComplementarioDto = { ...updateCursoComplementarioDto, duracion: +duracion, cuposDisponibles: +cuposDisponibles, fechaInicio: new Date(fechaInicio), fechaFin: new Date(fechaFin) }
+        updateCursoComplementarioDto = {
+            ...updateCursoComplementarioDto,
+            duracion: +duracion,
+            cuposDisponibles: +cuposDisponibles,
+            fechaInicio: fechaInicio ? new Date(fechaInicio) : null,
+            fechaFin: fechaFin ? new Date(fechaFin) : null,
+        }
 
         return this.prisma.cursoComplementario.update({
             where: {
