@@ -51,18 +51,20 @@ export class EmpresaService {
     }
 
     //eliminar
-    remove(id: string) {
-        // Eliminar las entradas correspondientes en la tabla ModeloRol usando modeloId como identificador
-        this.prisma.modeloRol.deleteMany({
-            where: {
-                modeloId: id,
-            },
-        })
-
-        return this.prisma.empresa.delete({
-            where: {
-                id,
-            },
-        })
+    async remove(id: string) {
+        const transaction = await this.prisma.$transaction([
+            // Eliminar el responsable de la solicitud
+            this.prisma.modeloRol.deleteMany({
+                where: {
+                    modeloId: id,
+                },
+            }),
+            // Eliminar la solicitud
+            this.prisma.empresa.delete({
+                where: {
+                    id,
+                },
+            }),
+        ])
     }
 }
