@@ -11,9 +11,10 @@ import { AreaFormacionModule } from './area-formacion/area-formacion.module'
 import { ListasModule } from './listas/listas.module'
 import { AuthModule } from './auth/auth.module'
 import { RolModule } from './rol/rol.module';
+import { UsuarioInvitadoModule } from './usuario-invitado/usuario-invitado.module';
 
 @Module({
-    imports: [UsuarioModule, EmpresaModule, CursoComplementarioModule, HorarioModule, SolicitudModule, AmbienteModule, AreaFormacionModule, ListasModule, AuthModule, RolModule],
+    imports: [UsuarioModule, EmpresaModule, CursoComplementarioModule, HorarioModule, SolicitudModule, AmbienteModule, AreaFormacionModule, ListasModule, AuthModule, RolModule, UsuarioInvitadoModule],
     controllers: [AppController],
     providers: [AppService],
 })

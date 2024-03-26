@@ -36,6 +36,21 @@ model Usuario {
   updatedAt            DateTime?              @updatedAt
 }
 
+model UsuarioInvitado {
+  id                   String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombres              String      @db.VarChar(60)
+  apellidos            String      @db.VarChar(60)
+  tipoDocumento        String      @db.VarChar(1)
+  numeroIdentificacion String      @unique @db.VarChar(10)
+  correoElectronico    String      @unique @db.VarChar(60)
+  celular              String      @db.VarChar(10)
+  departamento         String      @db.VarChar(2)
+  ciudad               String      @db.VarChar(2)
+  solicitud            Solicitud[]
+  createdAt            DateTime?   @default(now())
+  updatedAt            DateTime?   @updatedAt
+}
+
 model Empresa {
   id                 String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   nit                String      @unique @db.VarChar(11)
@@ -107,9 +122,10 @@ model Solicitud {
   estadoSolicitud       String                @db.VarChar(2)
   motivoSolicitud       String                @db.VarChar(2)
   responsableSolicitud  ResponsableSolicitud?
-
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  createdAt             DateTime?             @default(now())
+  updatedAt             DateTime?             @updatedAt
+  UsuarioInvitado       UsuarioInvitado?      @relation(fields: [usuarioInvitadoId], references: [id])
+  usuarioInvitadoId     String?               @db.Uuid
 }
 
 model ResponsableSolicitud {
