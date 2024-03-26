@@ -29,7 +29,7 @@ export class UsuarioService {
         })
     }
 
-    // es para traer rodo de la base de datos de la tabla usuarios  Get /usuario
+    // es para traer todo de la base de datos de la tabla usuarios  Get /usuario
     findAll(rolId: string) {
         return this.prisma.usuario.findMany({
             where: {

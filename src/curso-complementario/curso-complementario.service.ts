@@ -24,7 +24,7 @@ export class CursoComplementarioService {
         })
     }
 
-    // es para traer rodo de la base de datos de la tabla cursos complementarios
+    // es para traer todo de la base de datos de la tabla cursos complementarios
     //  Get /curso-complementario
     findAll() {
         return this.prisma.cursoComplementario.findMany({

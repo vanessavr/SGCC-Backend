@@ -14,7 +14,7 @@ export class AmbienteService {
         })
     }
 
-    // es para traer rodo de la base de datos de la tabla ambiente  Get /ambiente
+    // es para traer todo de la base de datos de la tabla ambiente  Get /ambiente
     findAll() {
         return this.prisma.ambiente.findMany()
     }

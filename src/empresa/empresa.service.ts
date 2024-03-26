@@ -26,18 +26,26 @@ export class EmpresaService {
         })
     }
 
-    // es para traer rodo de la base de datos de la tabla empresas  Get /empresa
+    // es para traer todo de la base de datos de la tabla empresas  Get /empresa
     findAll() {
         return this.prisma.empresa.findMany()
     }
 
-    // trae un registro por el camppo id de la tabla empresa Get /empresa/{id}
-    findOne(id: string) {
-        return this.prisma.empresa.findUnique({
+    // trae un registro por el campo id de la tabla empresa Get /empresa/{id}
+    async findOne(id: string) {
+        const empresa = await this.prisma.empresa.findUnique({
             where: {
                 id,
             },
         })
+
+        // Crear un nuevo objeto con los datos del usuario y el rolId
+        const empresaConRolId = {
+            ...empresa,
+            rolId: 'd7f72697-7937-490a-953d-26bd122d6c3e',
+        }
+
+        return empresaConRolId
     }
 
     //actualizar PATCH

@@ -27,14 +27,18 @@ export class AuthController {
     async login(@Res({ passthrough: true }) res: Response, @Body() loginAuthDto: LoginAuthDto) {
         const { numeroIdentificacion, password } = await loginAuthDto
 
+        let rolId = ''
+
         const findUser = await this.prisma.usuario.findUnique({ where: { numeroIdentificacion: numeroIdentificacion.toString() } })
-        const modeloRoles = await this.prisma.modeloRol.findMany({
-            where: { usuarioId: findUser.id },
-        })
-
-        const rolId = modeloRoles.map((modeloRol) => modeloRol.rolId)[0]
-
         const findEmpresa = await this.prisma.empresa.findUnique({ where: { nit: numeroIdentificacion.toString() } })
+
+        if (findUser) {
+            const modeloRoles = await this.prisma.modeloRol.findMany({
+                where: { usuarioId: findUser.id },
+            })
+
+            rolId = modeloRoles.map((modeloRol) => modeloRol.rolId)[0]
+        }
 
         if (!findUser && !findEmpresa) throw new HttpException('USER_NOT_FOUND', 404)
 
@@ -98,17 +102,26 @@ export class AuthController {
     @UseGuards(AuthGuard)
     @Post('profile')
     async getUserProfile(@Req() req: Request) {
-        const accessToken = req.headers['authorization'].split(' ')[1]
+        const accessToken = req.headers['authorization']?.split(' ')[1] // Use optional chaining to avoid errors if 'authorization' header is missing
+
         if (!accessToken) {
             throw new UnauthorizedException('Token de acceso no proporcionado')
         }
 
         const tokenData = await this.authService.getUserFromToken(accessToken)
 
-        const user = await this.usuarioService.findOne(tokenData.id)
-        const empresa = await this.empresaService.findOne(tokenData.id)
+        let result: any = null
 
-        return user || empresa
+        // Comprueba si el token representa un usuario o una empresa
+        if (tokenData) {
+            if (tokenData.rolId == 'd7f72697-7937-490a-953d-26bd122d6c3e') {
+                result = await this.empresaService.findOne(tokenData.id)
+            } else {
+                result = await this.usuarioService.findOne(tokenData.id)
+            }
+        }
+
+        return result
     }
 
     @ApiBearerAuth()
@@ -138,6 +151,13 @@ export class AuthController {
 
         const userFromToken = await this.authService.getUserFromToken(accessToken)
 
-        return this.empresaService.update(userFromToken.id, updatePerfilEmpresaDto)
+        const newPerfilEmpresaData = {
+            correoElectronico: updatePerfilEmpresaDto.correoElectronico,
+            celular: updatePerfilEmpresaDto.celular,
+            departamento: updatePerfilEmpresaDto.departamento,
+            ciudad: updatePerfilEmpresaDto.ciudad,
+        }
+
+        return this.empresaService.update(userFromToken.id, newPerfilEmpresaData)
     }
 }

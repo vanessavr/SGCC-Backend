@@ -22,7 +22,7 @@ export class SolicitudService {
         })
     }
 
-    // es para traer rodo de la base de datos de la tabla solicitud  Get /solicitud
+    // es para traer todo de la base de datos de la tabla solicitud  Get /solicitud
     findAll() {
         return this.prisma.solicitud.findMany({
             include: {

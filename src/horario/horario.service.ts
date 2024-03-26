@@ -13,7 +13,7 @@ export class HorarioService {
         })
     }
 
-    // es para traer rodo de la base de datos de la tabla horarios  Get /horario
+    // es para traer todo de la base de datos de la tabla horarios  Get /horario
     findAll() {
         return this.prisma.horario.findMany()
     }
