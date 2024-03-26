@@ -28,6 +28,12 @@ export class AuthController {
         const { numeroIdentificacion, password } = await loginAuthDto
 
         const findUser = await this.prisma.usuario.findUnique({ where: { numeroIdentificacion: numeroIdentificacion.toString() } })
+        const modeloRoles = await this.prisma.modeloRol.findMany({
+            where: { usuarioId: findUser.id },
+        })
+
+        const rolId = modeloRoles.map((modeloRol) => modeloRol.rolId)[0]
+
         const findEmpresa = await this.prisma.empresa.findUnique({ where: { nit: numeroIdentificacion.toString() } })
 
         if (!findUser && !findEmpresa) throw new HttpException('USER_NOT_FOUND', 404)
@@ -51,6 +57,7 @@ export class AuthController {
                 ciudad: findUser.ciudad,
                 fechaNacimiento: findUser.fechaNacimiento.toISOString().slice(0, 10),
                 celular: findUser.celular,
+                rolId: rolId,
             }
         }
 
@@ -66,6 +73,7 @@ export class AuthController {
                 ciudad: findEmpresa.ciudad,
                 fechaNacimiento: '',
                 celular: findEmpresa.celular,
+                rolId: 'd7f72697-7937-490a-953d-26bd122d6c3e',
             }
         }
 
