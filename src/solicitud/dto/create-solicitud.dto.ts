@@ -1,7 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsEmpty, IsNotEmpty } from 'class-validator'
-import { CreateSolicitudEmpresaDto } from './create-solicitud-empresa.dto' // Adjust the import path as needed
-import { CreateResponsableSolicitudDto } from './create-responsable-solicitud.dto' // Adjust the import path as needed
+import { IsNotEmpty } from 'class-validator'
 
 export class CreateSolicitudDto {
     @ApiProperty()
@@ -24,8 +22,10 @@ export class CreateSolicitudDto {
     cuposSolicitados: number
 
     @ApiProperty()
-    @IsNotEmpty()
     usuarioId: string
+
+    @ApiProperty()
+    empresaId: string
 
     @ApiProperty()
     @IsNotEmpty()
@@ -42,10 +42,4 @@ export class CreateSolicitudDto {
     @ApiProperty()
     @IsNotEmpty()
     motivoSolicitud: string
-
-    // @ApiProperty({ type: CreateSolicitudEmpresaDto })
-    // solicitudEmpresa: CreateSolicitudEmpresaDto
-
-    // @ApiProperty({ type: CreateResponsableSolicitudDto })
-    // responsableSolicitud: CreateResponsableSolicitudDto
 }

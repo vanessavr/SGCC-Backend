@@ -14,26 +14,12 @@ export class SolicitudService {
 
         createSolicitudDto = { ...createSolicitudDto, fechaSolicitud: currentDate, cuposSolicitados: +cuposSolicitados }
 
-        const createdSolicitud = await this.prisma.solicitud.create({
+        return await this.prisma.solicitud.create({
             data: createSolicitudDto,
             select: {
                 id: true, // Ensure to select the id of the created Solicitud
             },
         })
-
-        return this.prisma.responsableSolicitud.create({
-            data: {
-                usuarioId: createSolicitudDto.usuarioId,
-                solicitudId: createdSolicitud.id,
-            },
-        })
-
-        // return this.prisma.solicitudEmpresa.create({
-        //     data: {
-        //         empresaId: createSolicitudDto.solicitudEmpresa.empresaId,
-        //         solicitudId: createdSolicitud.id,
-        //     },
-        // })
     }
 
     // es para traer rodo de la base de datos de la tabla solicitud  Get /solicitud

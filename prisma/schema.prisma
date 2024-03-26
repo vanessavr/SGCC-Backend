@@ -37,21 +37,21 @@ model Usuario {
 }
 
 model Empresa {
-  id                 String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  nit                String             @unique @db.VarChar(11)
-  representanteLegal String             @db.VarChar(60)
-  razonSocial        String             @db.VarChar(60)
-  correoElectronico  String             @unique @db.VarChar(60)
-  celular            String             @db.VarChar(10)
-  direccion          String             @db.VarChar(50)
-  actividadEconomica String             @db.VarChar(2)
-  departamento       String             @db.VarChar(2)
-  ciudad             String             @db.VarChar(2)
-  password           String             @db.VarChar(65)
-  SolicitudEmpresa   SolicitudEmpresa[]
+  id                 String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nit                String      @unique @db.VarChar(11)
+  representanteLegal String      @db.VarChar(60)
+  razonSocial        String      @db.VarChar(60)
+  correoElectronico  String      @unique @db.VarChar(60)
+  celular            String      @db.VarChar(10)
+  direccion          String      @db.VarChar(50)
+  actividadEconomica String      @db.VarChar(2)
+  departamento       String      @db.VarChar(2)
+  ciudad             String      @db.VarChar(2)
+  password           String      @db.VarChar(65)
+  solicitud          Solicitud[]
   modeloRoles        ModeloRol[]
-  createdAt          DateTime?          @default(now())
-  updatedAt          DateTime?          @updatedAt
+  createdAt          DateTime?   @default(now())
+  updatedAt          DateTime?   @updatedAt
 }
 
 model Ambiente {
@@ -97,27 +97,19 @@ model Solicitud {
   radicadoSolicitud     String                @unique @db.VarChar(20)
   segmento              String                @db.VarChar(2)
   cuposSolicitados      Int
-  usuarioId             String                @db.Uuid
+  usuarioId             String?               @db.Uuid
   usuario               Usuario?              @relation(fields: [usuarioId], references: [id])
+  empresaId             String?               @db.Uuid
+  empresa               Empresa?              @relation(fields: [empresaId], references: [id])
   tipoSolicitud         String                @db.VarChar(2)
   cursoComplementarioId String                @db.Uuid
   cursoComplementario   CursoComplementario?  @relation(fields: [cursoComplementarioId], references: [id])
   estadoSolicitud       String                @db.VarChar(2)
   motivoSolicitud       String                @db.VarChar(2)
   responsableSolicitud  ResponsableSolicitud?
-  SolicitudEmpresa      SolicitudEmpresa?
-  createdAt             DateTime?             @default(now())
-  updatedAt             DateTime?             @updatedAt
-}
 
-model SolicitudEmpresa {
-  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  empresaId   String    @db.Uuid
-  empresa     Empresa   @relation(fields: [empresaId], references: [id])
-  solicitudId String    @unique @db.Uuid
-  solicitud   Solicitud @relation(fields: [solicitudId], references: [id])
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @updatedAt
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model ResponsableSolicitud {
