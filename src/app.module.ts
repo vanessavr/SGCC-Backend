@@ -10,9 +10,10 @@ import { AmbienteModule } from './ambiente/ambiente.module'
 import { AreaFormacionModule } from './area-formacion/area-formacion.module'
 import { ListasModule } from './listas/listas.module'
 import { AuthModule } from './auth/auth.module'
+import { RolModule } from './rol/rol.module';
 
 @Module({
-    imports: [UsuarioModule, EmpresaModule, CursoComplementarioModule, HorarioModule, SolicitudModule, AmbienteModule, AreaFormacionModule, ListasModule, AuthModule],
+    imports: [UsuarioModule, EmpresaModule, CursoComplementarioModule, HorarioModule, SolicitudModule, AmbienteModule, AreaFormacionModule, ListasModule, AuthModule, RolModule],
     controllers: [AppController],
     providers: [AppService],
 })

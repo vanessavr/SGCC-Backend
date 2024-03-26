@@ -54,4 +54,10 @@ export class CreateUsuarioDto {
     @ApiProperty()
     @IsNotEmpty()
     poblacionEspecial: string
+
+    @ApiProperty()
+    rolId: string
+
+    @ApiProperty()
+    esRegistro: boolean
 }
