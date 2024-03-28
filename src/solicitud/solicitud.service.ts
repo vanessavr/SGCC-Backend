@@ -24,8 +24,10 @@ export class SolicitudService {
     }
 
     // es para traer todo de la base de datos de la tabla solicitud  Get /solicitud
-    findAll() {
-        return this.prisma.solicitud.findMany({
+    findAll(id: string, rolId: string) {
+        // Definir un objeto de opciones para findMany
+        let queryOptions = {
+            where: {},
             include: {
                 usuario: {
                     select: {
@@ -33,7 +35,15 @@ export class SolicitudService {
                     },
                 },
             },
-        })
+        }
+
+        // Si el id NO es "1a364153-2864-461c-996a-d4382ac63aa2", agregar la condición where al objeto de opciones
+        if (rolId !== '1a364153-2864-461c-996a-d4382ac63aa2') {
+            queryOptions.where = { usuarioId: id }
+        }
+
+        // Llamar a findMany con las opciones definidas
+        return this.prisma.solicitud.findMany(queryOptions)
     }
 
     // trae un registro por el campo id de la tabla solicitud Get /solicitud/{id}
