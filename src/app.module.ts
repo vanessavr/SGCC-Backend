@@ -12,9 +12,11 @@ import { ListasModule } from './listas/listas.module'
 import { AuthModule } from './auth/auth.module'
 import { RolModule } from './rol/rol.module';
 import { UsuarioInvitadoModule } from './usuario-invitado/usuario-invitado.module';
+import { MulterModule } from '@nestjs/platform-express'
+import { multerConfig } from './config/multer.config'
 
 @Module({
-    imports: [UsuarioModule, EmpresaModule, CursoComplementarioModule, HorarioModule, SolicitudModule, AmbienteModule, AreaFormacionModule, ListasModule, AuthModule, RolModule, UsuarioInvitadoModule],
+    imports: [UsuarioModule, EmpresaModule, CursoComplementarioModule, HorarioModule, SolicitudModule, AmbienteModule, AreaFormacionModule, ListasModule, AuthModule, RolModule, UsuarioInvitadoModule, MulterModule.register(multerConfig),],
     controllers: [AppController],
     providers: [AppService],
 })

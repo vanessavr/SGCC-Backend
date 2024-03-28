@@ -100,28 +100,9 @@ export class AuthController {
 
     @ApiBearerAuth()
     @UseGuards(AuthGuard)
-    @Post('profile')
+    @Get('profile')
     async getUserProfile(@Req() req: Request) {
-        const accessToken = req.headers['authorization']?.split(' ')[1] // Use optional chaining to avoid errors if 'authorization' header is missing
-
-        if (!accessToken) {
-            throw new UnauthorizedException('Token de acceso no proporcionado')
-        }
-
-        const tokenData = await this.authService.getUserFromToken(accessToken)
-
-        let result: any = null
-
-        // Comprueba si el token representa un usuario o una empresa
-        if (tokenData) {
-            if (tokenData.rolId == 'd7f72697-7937-490a-953d-26bd122d6c3e') {
-                result = await this.empresaService.findOne(tokenData.id)
-            } else {
-                result = await this.usuarioService.findOne(tokenData.id)
-            }
-        }
-
-        return result
+        return this.authService.getProfileData(req)
     }
 
     @ApiBearerAuth()
@@ -159,5 +140,5 @@ export class AuthController {
         }
 
         return this.empresaService.update(userFromToken.id, newPerfilEmpresaData)
-    }
+    }    
 }

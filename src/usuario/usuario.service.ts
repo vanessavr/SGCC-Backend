@@ -144,4 +144,16 @@ export class UsuarioService {
 
         return
     }
+
+    savePathFotoPerfil(id: string, rutaFoto: string) {
+        return this.prisma.usuario.update({
+            where: {
+                id: id
+            },
+            data: {
+                foto: rutaFoto
+            }
+        })
+
+    }
 }
