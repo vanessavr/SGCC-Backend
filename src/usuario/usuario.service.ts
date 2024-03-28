@@ -2,7 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { CreateUsuarioDto } from './dto/create-usuario.dto'
 import { UpdateUsuarioDto } from './dto/update-usuario.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
-import { hash } from 'bcrypt'
+import { hash, compare } from 'bcrypt'
+import { CambiarPasswordDto } from './dto/cambiar-password.dto'
 
 @Injectable()
 export class UsuarioService {
@@ -115,5 +116,32 @@ export class UsuarioService {
                 },
             }),
         ])
+    }
+
+    async cambiarPassword(id: string, cambiarPasswordDto: CambiarPasswordDto) {
+        const findUser = await this.prisma.usuario.findUnique({
+            where: {
+                id,
+            },
+            select: {
+                password: true,
+            },
+        })
+
+        const checkPassword = await compare(cambiarPasswordDto.oldPassword, findUser.password)
+        const plainToHash = await hash(cambiarPasswordDto.newPassword, 10)
+
+        if (checkPassword) {
+            return this.prisma.usuario.update({
+                where: {
+                    id,
+                },
+                data: {
+                    password: plainToHash,
+                },
+            })
+        }
+
+        return
     }
 }

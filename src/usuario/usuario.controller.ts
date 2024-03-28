@@ -5,6 +5,7 @@ import { UpdateUsuarioDto } from './dto/update-usuario.dto'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { CursoComplementarioService } from 'src/curso-complementario/curso-complementario.service'
 import { AuthGuard } from 'src/auth/jwt-auth.guard'
+import { CambiarPasswordDto } from './dto/cambiar-password.dto'
 
 @ApiTags('Usuario')
 @Controller('usuario')
@@ -52,5 +53,12 @@ export class UsuarioController {
     @Get(':id/curso-complementario')
     findCursosComplementariosByInstructor(@Param('id') id: string) {
         return this.cursoComplementarioService.findCursosComplementariosByInstructor(id)
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @Post('/cambiar-password')
+    cambiarPassword(@Body() cambiarPasswordDto: CambiarPasswordDto) {
+        return this.usuarioService.cambiarPassword(cambiarPasswordDto.userId, cambiarPasswordDto)
     }
 }
