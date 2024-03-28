@@ -109,7 +109,7 @@ model Solicitud {
   id                    String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   fechaSolicitud        DateTime
   origenSolicitud       String                @db.VarChar(1)
-  radicadoSolicitud     String                @unique @db.VarChar(20)
+  radicadoSolicitud     String?               @unique @db.VarChar(20)
   segmento              String                @db.VarChar(2)
   cuposSolicitados      Int
   usuarioId             String?               @db.Uuid

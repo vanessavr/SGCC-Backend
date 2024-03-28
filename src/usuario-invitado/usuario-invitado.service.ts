@@ -23,7 +23,7 @@ export class UsuarioInvitadoService {
                 estadoSolicitud: '1',
                 motivoSolicitud: '3',
                 origenSolicitud: '4',
-                radicadoSolicitud: 'Sin radicar',
+                radicadoSolicitud: null,
                 segmento: '1',
                 tipoSolicitud: '1',
                 cursoComplementarioId: cursoComplementarioId,

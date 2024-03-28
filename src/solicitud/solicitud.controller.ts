@@ -4,6 +4,7 @@ import { CreateSolicitudDto } from './dto/create-solicitud.dto'
 import { UpdateSolicitudDto } from './dto/update-solicitud.dto'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { AuthGuard } from 'src/auth/jwt-auth.guard'
+import { ApplyCursoComplementarioDto } from './dto/apply-curso-complementario.dto'
 
 @ApiTags('Solicitud')
 @ApiBearerAuth()
@@ -40,5 +41,10 @@ export class SolicitudController {
     @Patch(':id/cambiar-estado')
     updateEstado(@Param('id') id: string, @Body() updateSolicitudDto: UpdateSolicitudDto) {
         return this.solicitudService.update(id, updateSolicitudDto)
+    }
+
+    @Post('/aplicar-curso-complementario/:id')
+    personaAplicarSolicitud(@Param('id') id: string, @Body() applyCursoComplementarioDto: ApplyCursoComplementarioDto) {
+        return this.solicitudService.personaAplicarSolicitud(id, applyCursoComplementarioDto)
     }
 }

@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, Req } from '@nestjs/common'
 import { CreateSolicitudDto } from './dto/create-solicitud.dto'
 import { UpdateSolicitudDto } from './dto/update-solicitud.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
+import { ApplyCursoComplementarioDto } from './dto/apply-curso-complementario.dto'
 
 @Injectable()
 export class SolicitudService {
@@ -83,5 +84,22 @@ export class SolicitudService {
                 },
             }),
         ])
+    }
+
+    personaAplicarSolicitud(id, applyCursoComplementarioDto: ApplyCursoComplementarioDto) {
+        return this.prisma.solicitud.create({
+            data: {
+                fechaSolicitud: new Date(),
+                cuposSolicitados: +applyCursoComplementarioDto.cuposSolicitados,
+                estadoSolicitud: '1',
+                motivoSolicitud: '3',
+                origenSolicitud: '4',
+                radicadoSolicitud: null,
+                segmento: '1',
+                tipoSolicitud: '1',
+                cursoComplementarioId: id,
+                usuarioId: applyCursoComplementarioDto.usuarioId,
+            },
+        })
     }
 }
