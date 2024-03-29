@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common'
 import { CreateEmpresaDto } from './dto/create-empresa.dto'
 import { UpdateEmpresaDto } from './dto/update-empresa.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
-import { hash } from 'bcrypt'
+import { hash, compare } from 'bcrypt'
+import { CambiarPasswordEmpresaDto } from './dto/cambiar-password-empresa.dto'
 
 @Injectable()
 export class EmpresaService {
@@ -39,7 +40,7 @@ export class EmpresaService {
             },
         })
 
-        // Crear un nuevo objeto con los datos del usuario y el rolId
+        // Crear un nuevo objeto con los datos de la empresa y el rolId
         const empresaConRolId = {
             ...empresa,
             rolId: 'd7f72697-7937-490a-953d-26bd122d6c3e',
@@ -74,5 +75,43 @@ export class EmpresaService {
                 },
             }),
         ])
+    }
+
+    async cambiarPassword(id: string, cambiarPasswordEmpresaDto: CambiarPasswordEmpresaDto) {
+        const findEmpresa = await this.prisma.empresa.findUnique({
+            where: {
+                id,
+            },
+            select: {
+                password: true,
+            },
+        })
+
+        const checkPassword = await compare(cambiarPasswordEmpresaDto.oldPassword, findEmpresa.password)
+        const plainToHash = await hash(cambiarPasswordEmpresaDto.newPassword, 10)
+
+        if (checkPassword) {
+            return this.prisma.empresa.update({
+                where: {
+                    id,
+                },
+                data: {
+                    password: plainToHash,
+                },
+            })
+        }
+
+        return
+    }
+
+    savePathFotoPerfil(id: string, rutaFoto: string) {
+        return this.prisma.empresa.update({
+            where: {
+                id: id,
+            },
+            data: {
+                foto: rutaFoto,
+            },
+        })
     }
 }

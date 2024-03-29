@@ -63,6 +63,7 @@ model Empresa {
   departamento       String      @db.VarChar(2)
   ciudad             String      @db.VarChar(2)
   password           String      @db.VarChar(65)
+  foto               String?     @db.VarChar(50)
   solicitud          Solicitud[]
   modeloRoles        ModeloRol[]
   createdAt          DateTime?   @default(now())
