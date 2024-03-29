@@ -51,7 +51,6 @@ export class CreateCursoComplementarioDto {
     fechaInicio: Date
 
     @ApiProperty()
-    
     fechaFin: Date
 
     @ApiProperty()
@@ -59,4 +58,7 @@ export class CreateCursoComplementarioDto {
 
     @ApiProperty()
     descripcion: string
+
+    @ApiProperty()
+    horarioDescripcion: string
 }

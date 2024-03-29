@@ -65,6 +65,11 @@ export class SolicitudController {
         return this.solicitudService.personaAplicarSolicitud(id, applyCursoComplementarioDto)
     }
 
+    @Post('/aplicar-curso-complementario-empresa/:id')
+    empresaAplicarSolicitud(@Param('id') id: string, @Body() applyCursoComplementarioDto: ApplyCursoComplementarioDto) {
+        return this.solicitudService.empresaAplicarSolicitud(id, applyCursoComplementarioDto)
+    }
+
     @Post(':id/upload-archivo')
     @UseInterceptors(FileInterceptor('file', multerConfig))
     async uploadFotoPerfil(@Req() req: Request, @Param('id') id: string, @UploadedFile() file) {

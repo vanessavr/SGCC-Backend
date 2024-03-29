@@ -82,28 +82,29 @@ model Ambiente {
 }
 
 model CursoComplementario {
-  id               String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  nombre           String      @db.VarChar(60)
-  areaFormacion    String      @db.VarChar(60)
-  fichaFormacion   String      @unique @db.VarChar(7)
-  centroFormacion  String      @db.VarChar(1)
-  jornada          String      @db.VarChar(1)
-  instructorId     String      @db.Uuid
-  instructor       Usuario?    @relation(fields: [instructorId], references: [id])
-  ambienteId       String      @db.Uuid
-  ambiente         Ambiente?   @relation(fields: [ambienteId], references: [id])
-  ciudad           String      @db.VarChar(2)
-  departamento     String      @db.VarChar(2)
-  duracion         Int
-  fechaInicio      DateTime?   @db.Date
-  fechaFin         DateTime?   @db.Date
-  cuposDisponibles Int?
-  imagen           String?
-  descripcion      String?
-  solicitud        Solicitud[]
-  horario          Horario[]
-  createdAt        DateTime?   @default(now())
-  updatedAt        DateTime?   @updatedAt
+  id                 String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombre             String      @db.VarChar(60)
+  areaFormacion      String      @db.VarChar(60)
+  fichaFormacion     String      @unique @db.VarChar(7)
+  centroFormacion    String      @db.VarChar(1)
+  jornada            String      @db.VarChar(1)
+  instructorId       String      @db.Uuid
+  instructor         Usuario?    @relation(fields: [instructorId], references: [id])
+  ambienteId         String      @db.Uuid
+  ambiente           Ambiente?   @relation(fields: [ambienteId], references: [id])
+  ciudad             String      @db.VarChar(2)
+  departamento       String      @db.VarChar(2)
+  duracion           Int
+  fechaInicio        DateTime?   @db.Date
+  fechaFin           DateTime?   @db.Date
+  cuposDisponibles   Int?
+  imagen             String?
+  descripcion        String?
+  horarioDescripcion String?
+  solicitud          Solicitud[]
+  horario            Horario[]
+  createdAt          DateTime?   @default(now())
+  updatedAt          DateTime?   @updatedAt
 }
 
 model Solicitud {

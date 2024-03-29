@@ -37,8 +37,12 @@ export class SolicitudService {
             },
         }
 
+        if (rolId === 'd7f72697-7937-490a-953d-26bd122d6c3e') {
+            queryOptions.where = { empresaId: id }
+        }
+
         // Si el id NO es "1a364153-2864-461c-996a-d4382ac63aa2", agregar la condición where al objeto de opciones
-        if (rolId !== '1a364153-2864-461c-996a-d4382ac63aa2' && rolId !== '4a29d9e1-76aa-49ff-9ccc-e0a3d2ec90c9') {
+        if (rolId !== '1a364153-2864-461c-996a-d4382ac63aa2' && rolId !== '4a29d9e1-76aa-49ff-9ccc-e0a3d2ec90c9' && rolId !== 'd7f72697-7937-490a-953d-26bd122d6c3e') {
             queryOptions.where = { usuarioId: id }
         }
 
@@ -111,6 +115,23 @@ export class SolicitudService {
                 tipoSolicitud: '1',
                 cursoComplementarioId: id,
                 usuarioId: applyCursoComplementarioDto.usuarioId,
+            },
+        })
+    }
+
+    empresaAplicarSolicitud(id, applyCursoComplementarioDto: ApplyCursoComplementarioDto) {
+        return this.prisma.solicitud.create({
+            data: {
+                fechaSolicitud: new Date(),
+                cuposSolicitados: +applyCursoComplementarioDto.cuposSolicitados,
+                estadoSolicitud: '1',
+                motivoSolicitud: '3',
+                origenSolicitud: '4',
+                radicadoSolicitud: null,
+                segmento: '1',
+                tipoSolicitud: '1',
+                cursoComplementarioId: id,
+                empresaId: applyCursoComplementarioDto.usuarioId,
             },
         })
     }
