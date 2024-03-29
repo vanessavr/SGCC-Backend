@@ -42,4 +42,7 @@ export class CreateSolicitudDto {
     @ApiProperty()
     @IsNotEmpty()
     motivoSolicitud: string
+
+    @ApiProperty()
+    archivo: string
 }

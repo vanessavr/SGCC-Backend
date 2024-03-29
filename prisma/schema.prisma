@@ -121,6 +121,7 @@ model Solicitud {
   cursoComplementario   CursoComplementario?  @relation(fields: [cursoComplementarioId], references: [id])
   estadoSolicitud       String                @db.VarChar(2)
   motivoSolicitud       String                @db.VarChar(2)
+  archivo               String?
   responsableSolicitud  ResponsableSolicitud?
   createdAt             DateTime?             @default(now())
   updatedAt             DateTime?             @updatedAt

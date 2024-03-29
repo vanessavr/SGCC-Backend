@@ -112,4 +112,15 @@ export class SolicitudService {
             },
         })
     }
+
+    savePathArchivo(id: string, rutaFoto: string) {
+        return this.prisma.solicitud.update({
+            where: {
+                id: id,
+            },
+            data: {
+                archivo: rutaFoto,
+            },
+        })
+    }
 }
