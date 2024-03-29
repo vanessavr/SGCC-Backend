@@ -8,6 +8,7 @@ import { ApplyCursoComplementarioDto } from './dto/apply-curso-complementario.dt
 import { AuthService } from 'src/auth/auth.service'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { multerConfig } from 'src/config/multer.config'
+import { UpdateEstadoSolicitudDto } from './dto/update-estado-solicitud.dto'
 
 @ApiTags('Solicitud')
 @ApiBearerAuth()
@@ -55,8 +56,8 @@ export class SolicitudController {
     }
 
     @Patch(':id/cambiar-estado')
-    updateEstado(@Param('id') id: string, @Body() updateSolicitudDto: UpdateSolicitudDto) {
-        return this.solicitudService.update(id, updateSolicitudDto)
+    updateEstado(@Param('id') id: string, @Body() updateEstadoSolicitudDto: UpdateEstadoSolicitudDto) {
+        return this.solicitudService.update(id, updateEstadoSolicitudDto)
     }
 
     @Post('/aplicar-curso-complementario/:id')

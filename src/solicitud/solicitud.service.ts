@@ -38,7 +38,7 @@ export class SolicitudService {
         }
 
         // Si el id NO es "1a364153-2864-461c-996a-d4382ac63aa2", agregar la condición where al objeto de opciones
-        if (rolId !== '1a364153-2864-461c-996a-d4382ac63aa2') {
+        if (rolId !== '1a364153-2864-461c-996a-d4382ac63aa2' && rolId !== '4a29d9e1-76aa-49ff-9ccc-e0a3d2ec90c9') {
             queryOptions.where = { usuarioId: id }
         }
 
@@ -68,7 +68,9 @@ export class SolicitudService {
     update(id: string, updateSolicitudDto: UpdateSolicitudDto) {
         const { cuposSolicitados } = updateSolicitudDto
 
-        updateSolicitudDto = { ...updateSolicitudDto, cuposSolicitados: +cuposSolicitados }
+        if (cuposSolicitados) {
+            updateSolicitudDto = { ...updateSolicitudDto, cuposSolicitados: +cuposSolicitados }
+        }
 
         return this.prisma.solicitud.update({
             where: {
