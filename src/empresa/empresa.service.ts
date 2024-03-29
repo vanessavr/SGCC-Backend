@@ -60,7 +60,7 @@ export class EmpresaService {
 
     //eliminar
     async remove(id: string) {
-        const transaction = await this.prisma.$transaction([
+        return await this.prisma.$transaction([
             // Eliminar el responsable de la solicitud
             this.prisma.modeloRol.deleteMany({
                 where: {

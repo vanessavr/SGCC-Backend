@@ -70,12 +70,24 @@ export class UsuarioController {
     @UseInterceptors(FileInterceptor('file', multerConfig))
     async uploadFotoPerfil(@Req() req: Request, @UploadedFile() file) {
         const profileData = await this.authService.getProfileData(req)
-        
+
         if (!file) {
-            throw new HttpException('Archivo no proporcionado', HttpStatus.BAD_REQUEST);
+            throw new HttpException('Archivo no proporcionado', HttpStatus.BAD_REQUEST)
         }
 
-        const resultado = await this.usuarioService.savePathFotoPerfil(profileData.id, file.filename);
+        const resultado = await this.usuarioService.savePathFotoPerfil(profileData.id, file.filename)
+
+        return resultado
+    }
+
+    @Post(':id/upload-foto-user')
+    @UseInterceptors(FileInterceptor('file', multerConfig))
+    async uploadFotoUser(@Param('id') id: string, @UploadedFile() file) {
+        if (!file) {
+            throw new HttpException('Archivo no proporcionado', HttpStatus.BAD_REQUEST)
+        }
+
+        const resultado = await this.usuarioService.savePathFotoPerfil(id, file.filename)
 
         return resultado
     }

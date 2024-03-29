@@ -102,7 +102,7 @@ export class UsuarioService {
 
     //Eliminar DELETE
     async remove(id: string) {
-        const transaction = await this.prisma.$transaction([
+        return await this.prisma.$transaction([
             // Eliminar el responsable de la solicitud
             this.prisma.modeloRol.deleteMany({
                 where: {
@@ -148,12 +148,11 @@ export class UsuarioService {
     savePathFotoPerfil(id: string, rutaFoto: string) {
         return this.prisma.usuario.update({
             where: {
-                id: id
+                id: id,
             },
             data: {
-                foto: rutaFoto
-            }
+                foto: rutaFoto,
+            },
         })
-
     }
 }
