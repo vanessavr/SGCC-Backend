@@ -111,7 +111,7 @@ export class SolicitudService {
         })
 
         if (existingSolicitud) {
-            throw new HttpException(' No puede aplicar a más de una solicitud', HttpStatus.BAD_REQUEST)
+            throw new HttpException('No puede aplicar a más de una solicitud', HttpStatus.BAD_REQUEST)
         }
 
         return await this.prisma.solicitud.create({
