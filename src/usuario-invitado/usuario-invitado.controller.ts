@@ -24,11 +24,6 @@ export class UsuarioInvitadoController {
         return this.usuarioInvitadoService.findOne(+id)
     }
 
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() updateUsuarioInvitadoDto: UpdateUsuarioInvitadoDto) {
-        return this.usuarioInvitadoService.update(+id, updateUsuarioInvitadoDto)
-    }
-
     @Delete(':id')
     remove(@Param('id') id: string) {
         return this.usuarioInvitadoService.remove(+id)

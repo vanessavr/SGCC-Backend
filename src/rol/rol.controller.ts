@@ -12,11 +12,6 @@ import { AuthGuard } from 'src/auth/jwt-auth.guard'
 export class RolController {
     constructor(private readonly rolService: RolService) {}
 
-    @Post()
-    create(@Body() createRolDto: CreateRolDto) {
-        return this.rolService.create(createRolDto)
-    }
-
     @Get()
     findAll() {
         return this.rolService.findAll()
@@ -25,11 +20,6 @@ export class RolController {
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.rolService.findOne(+id)
-    }
-
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() updateRolDto: UpdateRolDto) {
-        return this.rolService.update(+id, updateRolDto)
     }
 
     @Delete(':id')
