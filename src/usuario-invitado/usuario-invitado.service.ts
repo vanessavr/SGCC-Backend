@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, Injectable } from '@nestjs/common'
 import { CreateUsuarioInvitadoDto } from './dto/create-usuario-invitado.dto'
 import { UpdateUsuarioInvitadoDto } from './dto/update-usuario-invitado.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
@@ -10,11 +10,23 @@ export class UsuarioInvitadoService {
     async create(createUsuarioInvitadoDto: CreateUsuarioInvitadoDto) {
         const { cursoComplementarioId, ...restoDatos } = createUsuarioInvitadoDto
 
-        const usuarioInvitadoCreated = await this.prisma.usuarioInvitado.create({
-            data: {
-                ...restoDatos,
+        const usuarioExisting = await this.prisma.usuarioInvitado.findUnique({
+            where: {
+                correoElectronico: createUsuarioInvitadoDto.correoElectronico,
             },
         })
+
+        let usuarioSolicitud = usuarioExisting
+
+        throw new HttpException('USER_NOT_FOUND', 400)
+
+        if (!usuarioExisting) {
+            usuarioSolicitud = await this.prisma.usuarioInvitado.create({
+                data: {
+                    ...restoDatos,
+                },
+            })
+        }
 
         return this.prisma.solicitud.create({
             data: {
@@ -27,7 +39,7 @@ export class UsuarioInvitadoService {
                 segmento: '1',
                 tipoSolicitud: '1',
                 cursoComplementarioId: cursoComplementarioId,
-                usuarioInvitadoId: usuarioInvitadoCreated.id,
+                usuarioInvitadoId: usuarioSolicitud?.id,
             },
         })
     }

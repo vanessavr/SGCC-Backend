@@ -1,12 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsString } from 'class-validator'
+import { IsNotEmpty, IsString } from 'class-validator'
+import { i18nValidationMessage } from 'nestjs-i18n'
 
 export class LoginAuthDto {
     @ApiProperty()
-    @IsString()
+    @IsNotEmpty({ message: i18nValidationMessage('validation.NOT_EMPTY') })
     numeroIdentificacion: string
 
     @ApiProperty()
-    @IsString()
+    @IsNotEmpty({ message: i18nValidationMessage('validation.NOT_EMPTY') })
     password: string
 }

@@ -19,6 +19,14 @@ import * as path from 'path'
 
 @Module({
     imports: [
+        I18nModule.forRoot({
+            fallbackLanguage: 'es',
+            loaderOptions: {
+                path: path.join(__dirname, '/i18n/'),
+                watch: true,
+            },
+            resolvers: [{ use: QueryResolver, options: ['lang', 'locale', 'l'] }, AcceptLanguageResolver],
+        }),
         UsuarioModule,
         EmpresaModule,
         CursoComplementarioModule,

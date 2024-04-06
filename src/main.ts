@@ -1,13 +1,12 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
-import { BadRequestException, ValidationPipe } from '@nestjs/common'
 import * as cookieParser from 'cookie-parser'
 import * as express from 'express'
 import { join } from 'path'
 import { I18nValidationExceptionFilter, I18nValidationPipe } from 'nestjs-i18n'
 
-process.env.TZ = 'America/Bogota'
+process.env.TZ
 
 async function bootstrap() {
     // Create a NestJS application instance by passing the AppModule to the NestFactory
@@ -28,17 +27,21 @@ async function bootstrap() {
     SwaggerModule.setup('api', app, document)
 
     app.useGlobalPipes(
-        new ValidationPipe({
-            exceptionFactory: (errors) => {
-                const result = errors.map((error) => ({
-                    property: error.property,
-                    message: error.constraints[Object.keys(error.constraints)[0]],
-                }))
-                return new BadRequestException(result)
-            },
-            stopAtFirstError: true,
-        }),
+        new I18nValidationPipe(),
+
+        // new ValidationPipe({
+        //     exceptionFactory: (errors) => {
+        //         const result = errors.map((error) => ({
+        //             property: error.property,
+        //             message: error.constraints[Object.keys(error.constraints)[0]],
+        //         }))
+        //         return new BadRequestException(result)
+        //     },
+        //     stopAtFirstError: true,
+        // }),
     )
+
+    app.useGlobalFilters(new I18nValidationExceptionFilter())
 
     // Enable Cors
     app.enableCors({
