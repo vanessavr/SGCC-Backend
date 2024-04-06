@@ -1,6 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common'
+import { Controller, Get, Param } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
-import { CursoComplementarioService } from 'src/curso-complementario/curso-complementario.service'
 import { AreaFormacionService } from './area-formacion.service'
 
 @ApiTags('Área de formación')
@@ -17,9 +16,4 @@ export class AreaFormacionController {
     findByAreaFormacion(@Param('id') id: string) {
         return this.areaFormacionService.findCursoComplementarioByAreaFormacion(id)
     }
-
-    // @Get(':id/curso-complementario/:idCursoComplementario')
-    // findByCursoComplementario(@Param('id') id: string, @Param('idCursoComplementario') idCursoComplementario: number) {
-    //     return this.cursoComplementarioService.findByCursoComplementario(id, +idCursoComplementario)
-    // }
 }

@@ -82,11 +82,10 @@ export class CursoComplementarioService {
         })
     }
 
-    findByCursoComplementario(id: string, idCursoComplementario: string) {
+    findByCursoComplementario(id: string) {
         return this.prisma.cursoComplementario.findUnique({
             where: {
                 id,
-                // id: idCursoComplementario,
             },
         })
     }

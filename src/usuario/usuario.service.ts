@@ -11,7 +11,7 @@ export class UsuarioService {
 
     //Crear usuario POST
     async create(createUsuarioDto: CreateUsuarioDto) {
-        const { password, fechaNacimiento, rolId, esRegistro, ...restoDatos } = createUsuarioDto
+        const { password, fechaNacimiento, rolId, ...restoDatos } = createUsuarioDto
         const plainToHash = await hash(password, 10)
 
         const createdUser = await this.prisma.usuario.create({

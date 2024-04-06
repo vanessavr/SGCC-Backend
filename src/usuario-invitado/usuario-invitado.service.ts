@@ -1,6 +1,5 @@
-import { HttpException, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { CreateUsuarioInvitadoDto } from './dto/create-usuario-invitado.dto'
-import { UpdateUsuarioInvitadoDto } from './dto/update-usuario-invitado.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
 
 @Injectable()
@@ -17,8 +16,6 @@ export class UsuarioInvitadoService {
         })
 
         let usuarioSolicitud = usuarioExisting
-
-        throw new HttpException('USER_NOT_FOUND', 400)
 
         if (!usuarioExisting) {
             usuarioSolicitud = await this.prisma.usuarioInvitado.create({
@@ -50,10 +47,6 @@ export class UsuarioInvitadoService {
 
     findOne(id: number) {
         return `This action returns a #${id} usuarioInvitado`
-    }
-
-    update(id: number, updateUsuarioInvitadoDto: UpdateUsuarioInvitadoDto) {
-        return `This action updates a #${id} usuarioInvitado`
     }
 
     remove(id: number) {

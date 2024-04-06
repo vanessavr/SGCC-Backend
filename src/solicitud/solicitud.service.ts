@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, Req } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { CreateSolicitudDto } from './dto/create-solicitud.dto'
 import { UpdateSolicitudDto } from './dto/update-solicitud.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
@@ -26,7 +26,7 @@ export class SolicitudService {
     // es para traer todo de la base de datos de la tabla solicitud  Get /solicitud
     findAll(id: string, rolId: string) {
         // Definir un objeto de opciones para findMany
-        let queryOptions = {
+        const queryOptions = {
             where: {},
             include: {
                 usuario: {

@@ -1,18 +1,18 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { CursoComplementarioService } from './curso-complementario.service';
+import { Test, TestingModule } from '@nestjs/testing'
+import { CursoComplementarioService } from './curso-complementario.service'
 
 describe('CursoComplementarioService', () => {
-  let service: CursoComplementarioService;
+    let service: CursoComplementarioService
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [CursoComplementarioService],
-    }).compile();
+    beforeEach(async () => {
+        const module: TestingModule = await Test.createTestingModule({
+            providers: [CursoComplementarioService],
+        }).compile()
 
-    service = module.get<CursoComplementarioService>(CursoComplementarioService);
-  });
+        service = module.get<CursoComplementarioService>(CursoComplementarioService)
+    })
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
+    it('should be defined', () => {
+        expect(service).toBeDefined()
+    })
+})

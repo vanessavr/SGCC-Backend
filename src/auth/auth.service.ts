@@ -5,10 +5,11 @@ import { UsuarioService } from 'src/usuario/usuario.service'
 
 @Injectable()
 export class AuthService {
-    constructor(private jwtService: JwtService, 
+    constructor(
+        private jwtService: JwtService,
         private readonly empresaService: EmpresaService,
-        private readonly usuarioService: UsuarioService
-        ) {}
+        private readonly usuarioService: UsuarioService,
+    ) {}
 
     async getProfileData(@Req() req: Request) {
         const accessToken = req.headers['authorization']?.split(' ')[1] // Use optional chaining to avoid errors if 'authorization' header is missing

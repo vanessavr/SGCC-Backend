@@ -140,5 +140,5 @@ export class AuthController {
         }
 
         return this.empresaService.update(userFromToken.id, newPerfilEmpresaData)
-    }    
+    }
 }

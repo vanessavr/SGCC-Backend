@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Transform } from 'class-transformer'
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator'
+import { IsNotEmpty, IsString } from 'class-validator'
 import { i18nValidationMessage } from 'nestjs-i18n'
 
 export class CreateAmbienteDto {
