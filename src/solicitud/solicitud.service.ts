@@ -1,4 +1,4 @@
-import { Injectable, Req } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable, Req } from '@nestjs/common'
 import { CreateSolicitudDto } from './dto/create-solicitud.dto'
 import { UpdateSolicitudDto } from './dto/update-solicitud.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
@@ -103,6 +103,17 @@ export class SolicitudService {
     }
 
     personaAplicarSolicitud(id, applyCursoComplementarioDto: ApplyCursoComplementarioDto) {
+        const existingSolicitud = this.prisma.solicitud.findFirst({
+            where: {
+                usuarioId: applyCursoComplementarioDto.usuarioId,
+                estadoSolicitud: '1',
+            },
+        })
+
+        if (existingSolicitud) {
+            throw new HttpException(' No puede aplicar a más de una solicitud', HttpStatus.BAD_REQUEST)
+        }
+
         return this.prisma.solicitud.create({
             data: {
                 fechaSolicitud: new Date(),

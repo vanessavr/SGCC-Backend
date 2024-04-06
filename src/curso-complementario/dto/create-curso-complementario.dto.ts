@@ -60,5 +60,8 @@ export class CreateCursoComplementarioDto {
     descripcion: string
 
     @ApiProperty()
+    flyer: string
+
+    @ApiProperty()
     horarioDescripcion: string
 }
