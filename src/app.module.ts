@@ -14,6 +14,8 @@ import { RolModule } from './rol/rol.module'
 import { UsuarioInvitadoModule } from './usuario-invitado/usuario-invitado.module'
 import { MulterModule } from '@nestjs/platform-express'
 import { multerConfig } from './config/multer.config'
+import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n'
+import * as path from 'path'
 
 @Module({
     imports: [

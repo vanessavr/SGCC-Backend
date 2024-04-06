@@ -1,10 +1,11 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
-import { ValidationPipe } from '@nestjs/common'
+import { BadRequestException, ValidationPipe } from '@nestjs/common'
 import * as cookieParser from 'cookie-parser'
-import * as express from 'express';
+import * as express from 'express'
 import { join } from 'path'
+import { I18nValidationExceptionFilter, I18nValidationPipe } from 'nestjs-i18n'
 
 process.env.TZ = 'America/Bogota'
 
@@ -26,7 +27,18 @@ async function bootstrap() {
     // Setup Swagger module with the application instance and the Swagger document
     SwaggerModule.setup('api', app, document)
 
-    app.useGlobalPipes(new ValidationPipe())
+    app.useGlobalPipes(
+        new ValidationPipe({
+            exceptionFactory: (errors) => {
+                const result = errors.map((error) => ({
+                    property: error.property,
+                    message: error.constraints[Object.keys(error.constraints)[0]],
+                }))
+                return new BadRequestException(result)
+            },
+            stopAtFirstError: true,
+        }),
+    )
 
     // Enable Cors
     app.enableCors({
@@ -35,7 +47,7 @@ async function bootstrap() {
         credentials: true,
     })
 
-    app.use('/uploads', express.static(join(__dirname, '..', 'uploads')));
+    app.use('/uploads', express.static(join(__dirname, '..', 'uploads')))
 
     app.use(cookieParser())
 

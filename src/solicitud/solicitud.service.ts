@@ -102,8 +102,8 @@ export class SolicitudService {
         ])
     }
 
-    personaAplicarSolicitud(id, applyCursoComplementarioDto: ApplyCursoComplementarioDto) {
-        const existingSolicitud = this.prisma.solicitud.findFirst({
+    async personaAplicarSolicitud(id, applyCursoComplementarioDto: ApplyCursoComplementarioDto) {
+        const existingSolicitud = await this.prisma.solicitud.findFirst({
             where: {
                 usuarioId: applyCursoComplementarioDto.usuarioId,
                 estadoSolicitud: '1',
@@ -114,7 +114,7 @@ export class SolicitudService {
             throw new HttpException(' No puede aplicar a más de una solicitud', HttpStatus.BAD_REQUEST)
         }
 
-        return this.prisma.solicitud.create({
+        return await this.prisma.solicitud.create({
             data: {
                 fechaSolicitud: new Date(),
                 cuposSolicitados: +applyCursoComplementarioDto.cuposSolicitados,
