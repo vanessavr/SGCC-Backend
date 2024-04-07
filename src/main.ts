@@ -50,7 +50,7 @@ async function bootstrap() {
 
     // Enable Cors
     app.enableCors({
-        origin: 'https://sgcc-fronted.vercel.app',
+        origin: process.env.NEXTJS_PUBLIC_URL,
         credentials: true,
     })
 
