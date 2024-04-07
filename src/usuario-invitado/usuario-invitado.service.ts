@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { CreateUsuarioInvitadoDto } from './dto/create-usuario-invitado.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
 
@@ -23,6 +23,17 @@ export class UsuarioInvitadoService {
                     ...restoDatos,
                 },
             })
+        }
+
+        const existingSolicitud = await this.prisma.solicitud.findFirst({
+            where: {
+                usuarioInvitadoId: usuarioSolicitud.id,
+                estadoSolicitud: '1',
+            },
+        })
+
+        if (existingSolicitud) {
+            throw new HttpException('No puede aplicar a más de una solicitud', HttpStatus.BAD_REQUEST)
         }
 
         return this.prisma.solicitud.create({
