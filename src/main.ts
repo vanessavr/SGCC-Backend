@@ -8,6 +8,9 @@ import { I18nValidationExceptionFilter, I18nValidationPipe } from 'nestjs-i18n'
 
 process.env.TZ
 
+const port = process.env.PORT || 3000
+console.log(process.env.NEXTJS_PUBlIC_URL)
+
 async function bootstrap() {
     // Create a NestJS application instance by passing the AppModule to the NestFactory
     const app = await NestFactory.create(AppModule)
@@ -45,7 +48,6 @@ async function bootstrap() {
 
     // Enable Cors
     app.enableCors({
-        // allowedHeaders: ['content-type'],
         origin: process.env.NEXTJS_PUBlIC_URL,
         credentials: true,
     })
@@ -54,6 +56,6 @@ async function bootstrap() {
 
     app.use(cookieParser())
 
-    await app.listen(3000)
+    await app.listen(port)
 }
 bootstrap()
