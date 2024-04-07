@@ -47,4 +47,7 @@ export class CreateEmpresaDto {
 
     @ApiProperty()
     foto: string
+
+    @ApiProperty()
+    rolId: string
 }
