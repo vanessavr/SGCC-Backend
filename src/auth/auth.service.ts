@@ -24,7 +24,7 @@ export class AuthService {
 
         // Comprueba si el token representa un usuario o una empresa
         if (tokenData) {
-            if (tokenData.rolId == 'd7f72697-7937-490a-953d-26bd122d6c3e') {
+            if (tokenData.rolId == process.env.ROL_EMPRESA_ID) {
                 result = await this.empresaService.findOne(tokenData.id)
             } else {
                 result = await this.usuarioService.findOne(tokenData.id)
