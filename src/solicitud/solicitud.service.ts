@@ -37,12 +37,12 @@ export class SolicitudService {
             },
         }
 
-        if (rolId === 'd7f72697-7937-490a-953d-26bd122d6c3e') {
+        if (rolId === process.env.ROL_EMPRESA_ID) {
             queryOptions.where = { empresaId: id }
         }
 
-        // Si el id NO es "1a364153-2864-461c-996a-d4382ac63aa2", agregar la condición where al objeto de opciones
-        if (rolId !== '1a364153-2864-461c-996a-d4382ac63aa2' && rolId !== '4a29d9e1-76aa-49ff-9ccc-e0a3d2ec90c9' && rolId !== 'd7f72697-7937-490a-953d-26bd122d6c3e') {
+        // Si el id NO es process.env.ROL_ADMIN_ID, agregar la condición where al objeto de opciones
+        if (rolId !== process.env.ROL_ADMIN_ID && rolId !== process.env.ROL_INSTRUCTOR_ID && rolId !== process.env.ROL_EMPRESA_ID) {
             queryOptions.where = { usuarioId: id }
         }
 
