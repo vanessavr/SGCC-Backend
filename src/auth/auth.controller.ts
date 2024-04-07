@@ -77,7 +77,7 @@ export class AuthController {
                 ciudad: findEmpresa.ciudad,
                 fechaNacimiento: '',
                 celular: findEmpresa.celular,
-                rolId: 'd7f72697-7937-490a-953d-26bd122d6c3e',
+                rolId: process.env.ROL_EMPRESA_ID,
             }
         }
 

@@ -21,7 +21,7 @@ export class EmpresaService {
 
         return this.prisma.modeloRol.create({
             data: {
-                rolId: 'd7f72697-7937-490a-953d-26bd122d6c3e',
+                rolId: process.env.ROL_EMPRESA_ID,
                 empresaId: createdEmpresa.id,
             },
         })
@@ -43,7 +43,7 @@ export class EmpresaService {
         // Crear un nuevo objeto con los datos de la empresa y el rolId
         const empresaConRolId = {
             ...empresa,
-            rolId: 'd7f72697-7937-490a-953d-26bd122d6c3e',
+            rolId: process.env.ROL_EMPRESA_ID,
         }
 
         return empresaConRolId

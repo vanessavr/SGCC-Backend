@@ -24,7 +24,7 @@ export class UsuarioService {
 
         return this.prisma.modeloRol.create({
             data: {
-                rolId: rolId || 'b202d04e-eb12-4cf5-9c2d-d382536e7ff4',
+                rolId: rolId || process.env.ROL_PERSONA_ID,
                 usuarioId: createdUser.id,
             },
         })
