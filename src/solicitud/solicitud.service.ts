@@ -130,7 +130,18 @@ export class SolicitudService {
         })
     }
 
-    empresaAplicarSolicitud(id, applyCursoComplementarioDto: ApplyCursoComplementarioDto) {
+    async empresaAplicarSolicitud(id, applyCursoComplementarioDto: ApplyCursoComplementarioDto) {
+        const existingSolicitud = await this.prisma.solicitud.findFirst({
+            where: {
+                empresaId: applyCursoComplementarioDto.empresaId,
+                estadoSolicitud: '1',
+            },
+        })
+
+        if (existingSolicitud) {
+            throw new HttpException('No puede aplicar a más de una solicitud', HttpStatus.BAD_REQUEST)
+        }
+
         return this.prisma.solicitud.create({
             data: {
                 fechaSolicitud: new Date(),
