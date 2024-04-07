@@ -84,7 +84,7 @@ export class AuthController {
         const token = this.jwtService.sign(payload)
 
         // Set the JWT token as a cookie in the response
-        res.cookie('accessToken', token, { httpOnly: true })
+        // res.cookie('accessToken', token, { httpOnly: true })
 
         return { user: findUser || findEmpresa, token }
     }
