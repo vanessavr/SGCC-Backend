@@ -11,7 +11,6 @@ import { I18nValidationExceptionFilter, I18nValidationPipe } from 'nestjs-i18n'
 process.env.TZ
 
 const port = process.env.PORT || 3000
-console.log(process.env.NEXTJS_PUBLIC_URL)
 
 async function bootstrap() {
     // Create a NestJS application instance by passing the AppModule to the NestFactory

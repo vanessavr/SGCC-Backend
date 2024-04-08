@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { CreateCursoComplementarioDto } from './dto/create-curso-complementario.dto'
 import { UpdateCursoComplementarioDto } from './dto/update-curso-complementario.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
@@ -8,8 +8,18 @@ export class CursoComplementarioService {
     constructor(private prisma: PrismaService) {}
 
     //Crear curso complementario POST
-    create(createCursoComplementarioDto: CreateCursoComplementarioDto) {
+    async create(createCursoComplementarioDto: CreateCursoComplementarioDto) {
         const { duracion, cuposDisponibles, fechaInicio, fechaFin } = createCursoComplementarioDto
+
+        const fichaFormacionExisting = await this.prisma.cursoComplementario.findUnique({
+            where: {
+                fichaFormacion: createCursoComplementarioDto.fichaFormacion,
+            },
+        })
+
+        if (fichaFormacionExisting) {
+            throw new HttpException('La ficha de formación ya existe', HttpStatus.BAD_REQUEST)
+        }
 
         createCursoComplementarioDto = {
             ...createCursoComplementarioDto,
